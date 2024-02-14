@@ -1,4 +1,5 @@
 {% load static %}
+
 {% url 'home' as home_url %}
 {% url 'about' as about_url %}
 {% url 'account_login' as login_url %}
@@ -43,13 +44,11 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link
-                          {% if request.path == home_url %}active{%endif%}" aria-current="page"
+                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
                             href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link
-                          {% if request.path == about_url %}active{%endif%}" aria-current="page"
+                        <a class="nav-link {% if request.path == about_url %}active{% endif %}" aria-current="page"
                             href="{% url 'about' %}">About</a>
                     </li>
                     {% if user.is_authenticated %}
@@ -76,6 +75,11 @@
     </nav>
 
     <main class="flex-shrink-0 main-bg">
+        {% if user.is_authenticated %}
+        <p class="text-end m-3">You are logged in as {{ user.username }}</p>
+        {% else %}
+        <p class="text-end m-3">You are not logged in</p>
+        {% endif %}
 
         {% block content %}
         <!-- Content Goes here -->
@@ -86,7 +90,7 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3 dark-bg">
         <p class="m-0 text-center text-white">
-            {% block copyright %}Made by Chris Diggle{% endblock copyright %}
+            {% block copyright %}Chris Diggle{% endblock copyright %}
         </p>
         <p class="m-0 text-center text-white">Follow us: <i class="fab fa-facebook-square ms-3"></i>
             <i class="fab fa-twitter-square ms-3"></i>
